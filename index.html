@@ -23,15 +23,16 @@
 
   <div class="container">
     <div class="row w3-card-4">
-      <div v-for="radio_nm in radio_db_top10(radio_db_lst)" class="col-sm-3 w3-card-2">
-        <h3>{{radio_nm[0]}}</h3>
-        <p>Genre - {{radio_nm[2]}}</p>
+      <div v-for="radio_nm in radio_db_top10(radio_db_lst)" class="col-sm-4">
+        <div class="w3-card-2">
+        <h3>{{radio_nm[0]}} - {{radio_nm[1]}}</h3>
+        <p>Genre - {{radio_nm[3]}}</p>
         <!-- <p>URL - {{radio_nm[1]}}</p> -->
 
         <audio controls>
-          <source v-bind:src="radio_nm[1]" v-bind:type="radio_nm[3]">
+          <source v-bind:src="radio_nm[2]" v-bind:type="radio_nm[4]">
         </audio>
-
+      </div>
       </div>
 
     </div>
@@ -82,16 +83,20 @@ radio_db_data = axios.get(radio_db_url)
     var parser = new DOMParser();
     var doc_u = parser.parseFromString(res.data, "text/xml");
 
+    let cnt = 0
+
     for (var i=0; i< doc_u.getElementsByTagName("entry").length; i++)
     {
       try {
         tmp_lst = []
+        tmp_lst.push(cnt);
         tmp_lst.push(doc_u.getElementsByTagName("entry")[i].getElementsByTagName("server_name")[0].firstChild.nodeValue);
         tmp_lst.push(doc_u.getElementsByTagName("entry")[i].getElementsByTagName("listen_url")[0].firstChild.nodeValue);
         tmp_lst.push(doc_u.getElementsByTagName("entry")[i].getElementsByTagName("genre")[0].firstChild.nodeValue);
         tmp_lst.push(doc_u.getElementsByTagName("entry")[i].getElementsByTagName("server_type")[0].firstChild.nodeValue);
 
         vm.radio_db_lst.push(tmp_lst)
+        cnt +=1;
       }
       catch (error) {}
     }
