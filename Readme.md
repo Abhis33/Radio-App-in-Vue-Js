@@ -1,4 +1,4 @@
-A simple radio Web App in Vue Js
+A simple Resopnsive radio Web App in Vue Js
 
 The radio database list is obtained in xml format from "http://dir.xiph.org/yp.xml"
 This list is maintained by icecast which is an online audio streaming software icecast and it maintains all its deployed versions across the web.
